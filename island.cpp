@@ -56,7 +56,7 @@ int countIslands(vector< vector<int> > mat, int n, int m)
             }
             if(j-1 >= 0 && mat[i][j-1] == 1)
                 Union(node, i*m + j - 1, parent);
-            if(j+1 < n && mat[i][j+1] == 1)
+            if(j+1 < m && mat[i][j+1] == 1)
                 Union(node, i*m + j + 1, parent);
         }
     }
