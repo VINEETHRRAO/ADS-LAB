@@ -140,38 +140,66 @@ if (balance < -1 && getBalance(base->rgt) > 0)
 base->rgt = rgtRotate(base->rgt);
 return lftRotate(base);
 }
+
 return base;
 }
-void preOrder(struct Node *base)
+
+int search(struct Node *base,int key)
+{
+    if(base==NULL)
+      return -1;
+    else if(key==base->key)
+      return 1;
+    else if(key>base->key)
+       search(base->rgt,key);
+    else if(key<base->key)
+       search(base->lft,key);
+    
+}
+void inOrder(struct Node *base)
 {
 if(base != NULL)
-{
+{inOrder(base->lft);
 printf("%d ", base->key);
-preOrder(base->lft);
-preOrder(base->rgt);
+inOrder(base->rgt);
 }
 }
 int main()
 {
 struct Node *base = NULL;
-base = insert(base, 27);
-base = insert(base, 9);
-base = insert(base, 19);
-base = insert(base, 91);
-base = insert(base, 90);
-base = insert(base, 72);
-printf("The output of an AVL tree in preOrder form: \n");
-preOrder(base);
-printf("\n");
-base = deleteNode(base, 9);
-base = deleteNode(base, 72);
-printf("The tree in preOrder traversal outputs after deletion: \n");
-preOrder(base);
-printf("\n");
-base = insert(base, 1);
-base = insert(base, 2709);
-printf("The tree in preOrder traversal outputs 2 more inserts: \n");
-preOrder(base);
-printf("\n");
-return 0;
+int choice,data;
+   while(choice!=-1) {
+         printf("Make a choice\n");
+         printf(" 1 to insert\n");
+         printf(" 2 to deletion\n");
+         printf(" 3 to search\n");
+         printf(" 4 for print\n");
+        printf("Enter  : ");
+        scanf("%d", &choice);
+        if(choice == -1)
+            break;
+        switch(choice) {
+            case 1: printf("Enter the data : ");
+                    scanf("%d", &data);
+                    base = insert(base, data);
+                    break;
+            case 2: printf("Enter the key to delete :");
+                    scanf("%d", &data);
+                    base = deleteNode(base, data);
+                    break;
+            case 3: printf("Enter the key to be searched : ");
+                    scanf("%d", &data);
+                    if(search(base,data)!=1)
+                    printf("Element not found\n");
+                    else
+                    printf("%d is found in the tree\n",data);
+                    break;
+            case 4: if(base==NULL) {printf("Tree is empty\n");}
+                    inOrder(base);
+                    printf("\n");                   
+                    break;
+            default: printf("Invalid Selection\n");
+        }
+    }
+    return 0;
 }
