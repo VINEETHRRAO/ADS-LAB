@@ -126,22 +126,24 @@ int skiplist_delete(skiplist *list, int key) {
 static void skiplist_dump(skiplist *list) {
     node *x = list->header;
     while (x && x->forward[1] != list->header) {
-        printf("%d[%d]->", x->forward[1]->key, x->forward[1]->value);
+        printf("{%d}->", x->forward[1]->value);
         x = x->forward[1];
     }
-    printf("NIL\n");
+    printf("NULL\n");
 }
  
 int main() {
     skiplist list;
     skiplist_init(&list);
     int choice = 0, data;
-    printf("Enter 1 for insertion\n");
-    printf("Enter 2 for deletion\n");
-    printf("Enter 3 to search the list\n");
-    printf("Enter 4 for printing the list\n");
+  
     while(choice!=-1) {
-        printf("Enter your choice : ");
+         printf("Make a choice\n");
+         printf(" 1 to insert\n");
+         printf(" 2 to deletion\n");
+         printf(" 3 to search\n");
+         printf(" 4 for print\n");
+        printf("Enter  : ");
         scanf("%d", &choice);
         if(choice == -1)
             break;
@@ -153,7 +155,8 @@ int main() {
                     break;
             case 2: printf("Enter the key to delete :");
                     scanf("%d", &data);
-                    skiplist_delete(&list, data);
+                    if(skiplist_delete(&list, data)== 1)
+                    printf("Element not found!!\n");
                     break;
             case 3: printf("Enter the key to be searched : ");
                     scanf("%d", &data);
